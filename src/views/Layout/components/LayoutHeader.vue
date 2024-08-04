@@ -1,15 +1,5 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/layout'
-  import {onMounted, ref} from "vue";
-
-  const categaryList = ref([])
-  const getCategories = async () => {
-    const categories = await getCategoryAPI()
-    // console.log(categories)
-    categaryList.value = categories.result
-  }
-
-  onMounted(() => getCategories())
+import LayoutHeaderUI from './LayoutHeaderUI.vue'
 </script>
 
 <template>
@@ -18,17 +8,7 @@ import { getCategoryAPI } from '@/apis/layout'
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
-      <ul class="app-header-nav">
-        <li class="home" v-for="item in categaryList" :key="item.id">
-          <router-link to="/">{{ item.name }}</router-link>
-        </li>
-<!--        <li class="home">-->
-<!--          <RouterLink to="/">首页</RouterLink>-->
-<!--        </li>-->
-<!--        <li> <RouterLink to="/">居家</RouterLink> </li>-->
-<!--        <li> <RouterLink to="/">美食</RouterLink> </li>-->
-<!--        <li> <RouterLink to="/">服饰</RouterLink> </li>-->
-      </ul>
+      <LayoutHeaderUI />
       <div class="search">
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜">
