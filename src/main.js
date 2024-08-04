@@ -1,4 +1,4 @@
-import './assets/main.css'
+// import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -6,6 +6,8 @@ import { getCategory } from '@/apis/testAPI'
 
 import App from './App.vue'
 import router from './router'
+
+import '@/styles/common.scss'
 
 getCategory().then(res => {
   console.log(res)
