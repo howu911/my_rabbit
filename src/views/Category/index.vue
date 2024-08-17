@@ -3,7 +3,7 @@ import GoodsItem from '../Home/components/GoodsItem.vue'
 import {getTopCategoryAPI} from "@/apis/category.js";
 import { getBannerAPI } from '@/apis/home'
 import {ref, onMounted} from "vue";
-import {useRoute} from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 
 
 const categoryData = ref({})
@@ -11,9 +11,9 @@ const bannerList = ref([])
 
 const route = useRoute()
 
-const getCategory = async () => {
-  console.log(route.params.id)
-  const data = await getTopCategoryAPI(route.params.id)
+const getCategory = async (id = route.params.id) => {
+  console.log(id)
+  const data = await getTopCategoryAPI(id)
   console.log(data.result)
   categoryData.value = data.result;
 }
@@ -30,6 +30,12 @@ onMounted(() => {
   console.log("这里是category");
   getCategory()
   getBanner()
+})
+
+// 这里的to对象里面有跳转到指定网址的参数和信息
+onBeforeRouteUpdate((to) => {
+  console.log("路由变化了", to.params.id);
+  getCategory(to.params.id);
 })
 
 </script>
