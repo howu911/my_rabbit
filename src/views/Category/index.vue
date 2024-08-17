@@ -1,42 +1,9 @@
 <script setup>
 import GoodsItem from '../Home/components/GoodsItem.vue'
-import {getTopCategoryAPI} from "@/apis/category.js";
-import { getBannerAPI } from '@/apis/home'
-import {ref, onMounted} from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
-
-
-const categoryData = ref({})
-const bannerList = ref([])
-
-const route = useRoute()
-
-const getCategory = async (id = route.params.id) => {
-  console.log(id)
-  const data = await getTopCategoryAPI(id)
-  console.log(data.result)
-  categoryData.value = data.result;
-}
-
-const getBanner = async () => {
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  console.log(res)
-  bannerList.value = res.result
-}
-
-onMounted(() => {
-  console.log("这里是category");
-  getCategory()
-  getBanner()
-})
-
-// 这里的to对象里面有跳转到指定网址的参数和信息
-onBeforeRouteUpdate((to) => {
-  console.log("路由变化了", to.params.id);
-  getCategory(to.params.id);
-})
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 
 </script>
 
