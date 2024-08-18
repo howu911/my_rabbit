@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import {loginAPI} from "@/apis/user.js";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+import { useRouter } from "vue-router";
+
 // 表单数据对象
 const userInfo = ref({
   account: '1311111111',
@@ -24,6 +29,27 @@ const rules = {
     }
   ]
 }
+
+const formRef = ref(null);
+const router = useRouter();
+const doLogin = () => {
+  const { account, password } = userInfo.value;
+  formRef.value.validate(async (valid) => {
+    // valid: 所有表单都通过校验  才为true
+    console.log(valid);
+    // 以valid做为判断条件 如果通过校验才执行登录逻辑
+    if (valid) {
+      // TODO LOGIN
+      await loginAPI({ account, password });
+      // 这里其实很奇怪，不知道为什么登录出错就不执行这个了
+      // 1. 提示用户
+      ElMessage({ type: "success", message: "登录成功" });
+      // 2. 跳转首页
+      router.replace({ path: "/" });
+    }
+  });
+}
+
 </script>
 
 

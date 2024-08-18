@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {ElMessage} from "element-plus";
 
 
 const httpInstance = axios.create({
@@ -13,6 +14,11 @@ httpInstance.interceptors.request.use(config => {
 
 
 httpInstance.interceptors.response.use(res => res.data, e => {
+// 统一错误提示
+  ElMessage({
+    type: 'warning',
+    message: e.response.data.message
+  })
   return Promise.reject(e)
 })
 
